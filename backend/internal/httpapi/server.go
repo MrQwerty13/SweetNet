@@ -32,11 +32,12 @@ const SessionLifetime = 30 * 24 * time.Hour
 const MaintenanceLock int64 = 83927461
 
 type Server struct {
-	DB        *pgxpool.Pool
-	Config    config.Config
-	limiter   *rateLimiter
-	uploads   chan struct{}
-	dummyHash string
+	DB           *pgxpool.Pool
+	Config       config.Config
+	limiter      *rateLimiter
+	uploads      chan struct{}
+	passwordWork chan struct{}
+	dummyHash    string
 }
 
 type User struct {
@@ -67,7 +68,7 @@ func New(db *pgxpool.Pool, cfg config.Config) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Server{DB: db, Config: cfg, limiter: &rateLimiter{entries: map[string]rateEntry{}}, uploads: make(chan struct{}, 2), dummyHash: dummy}, nil
+	return &Server{DB: db, Config: cfg, limiter: &rateLimiter{entries: map[string]rateEntry{}}, uploads: make(chan struct{}, 2), passwordWork: make(chan struct{}, 2), dummyHash: dummy}, nil
 }
 func (s *Server) Handler() http.Handler {
 	r := chi.NewRouter()
@@ -84,14 +85,14 @@ func (s *Server) Handler() http.Handler {
 	})
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Use(s.origin)
-		r.Post("/auth/register", s.register)
-		r.Post("/auth/login", s.login)
+		r.With(s.boundPasswordWork).Post("/auth/register", s.register)
+		r.With(s.boundPasswordWork).Post("/auth/login", s.login)
 		r.Group(func(r chi.Router) {
 			r.Use(s.requireUser)
 			r.Post("/auth/logout", s.logout)
 			r.Get("/me", func(w http.ResponseWriter, r *http.Request) { write(w, 200, current(r)) })
 			r.Patch("/me", s.profile)
-			r.Post("/me/password", s.password)
+			r.With(s.boundPasswordWork).Post("/me/password", s.password)
 			r.Get("/posts", s.listPosts)
 			r.Post("/posts", s.createPost)
 			r.Get("/posts/{id}", s.getPost)
@@ -306,4 +307,18 @@ func ip(r *http.Request) string {
 		return r.RemoteAddr
 	}
 	return host
+}
+
+// Argon2 uses memory intentionally. Limit concurrent password work globally,
+// in addition to time-window limits, to keep unauthenticated traffic bounded.
+func (s *Server) boundPasswordWork(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		select {
+		case s.passwordWork <- struct{}{}:
+			defer func() { <-s.passwordWork }()
+			next.ServeHTTP(w, r)
+		default:
+			fail(w, 429, "BUSY", "Сервер занят. Попробуйте позже")
+		}
+	})
 }

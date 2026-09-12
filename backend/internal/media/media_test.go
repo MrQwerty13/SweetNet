@@ -3,6 +3,7 @@ package media
 import (
 	"bytes"
 	"encoding/binary"
+	"hash/crc32"
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -46,5 +47,20 @@ func TestReencodingAndLimits(t *testing.T) {
 	files, _ := os.ReadDir(dir)
 	if len(files) != 2 {
 		t.Fatalf("invalid uploads left files: %d", len(files))
+	}
+}
+
+func TestPixelLimitBeforeDecoding(t *testing.T) {
+	var data bytes.Buffer
+	if err := png.Encode(&data, image.NewRGBA(image.Rect(0, 0, 2, 2))); err != nil {
+		t.Fatal(err)
+	}
+	malformed := data.Bytes()
+	// Valid IHDR declaring 5001² pixels; no huge decoded allocation is needed.
+	binary.BigEndian.PutUint32(malformed[16:20], 5001)
+	binary.BigEndian.PutUint32(malformed[20:24], 5001)
+	binary.BigEndian.PutUint32(malformed[29:33], crc32.ChecksumIEEE(malformed[12:29]))
+	if _, err := Save(t.TempDir(), bytes.NewReader(malformed), "image/png"); err != ErrLarge {
+		t.Fatalf("pixel bound: %v", err)
 	}
 }
