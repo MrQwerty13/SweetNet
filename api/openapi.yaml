@@ -23,59 +23,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Health"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security: []
       parameters: []
   /readyz:
@@ -90,59 +54,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Health"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
         "503":
           description: Database unavailable
           content:
@@ -163,59 +91,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security: []
       parameters:
         - name: Origin
@@ -243,59 +135,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security: []
       parameters:
         - name: Origin
@@ -319,59 +175,23 @@ paths:
         "204":
           description: Success
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -394,59 +214,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters: []
@@ -461,59 +245,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -538,59 +286,23 @@ paths:
         "204":
           description: Success
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -619,59 +331,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Feed"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -699,59 +375,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Post"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -787,59 +427,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Post"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -860,59 +464,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Post"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -942,59 +510,23 @@ paths:
         "204":
           description: Success
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -1033,59 +565,23 @@ paths:
                 type: string
                 const: no-store
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -1107,59 +603,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Invites"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters: []
@@ -1174,59 +634,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/CreatedInvite"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -1245,59 +669,23 @@ paths:
         "204":
           description: Success
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -1326,59 +714,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/Users"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters: []
@@ -1394,59 +746,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
         "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/BadRequest"
         "401":
-          description: Session absent, expired, or inactive user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Unauthenticated"
         "403":
-          description: Origin rejected or insufficient rights
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Forbidden"
         "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/NotFound"
         "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/Conflict"
         "413":
-          description: Request or image too large
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/TooLarge"
         "415":
-          description: Unsupported content type
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/UnsupportedType"
         "429":
-          description: Rate limit
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/RateLimited"
         "500":
-          description: Internal error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "#/components/responses/InternalError"
       security:
         - sessionCookie: []
       parameters:
@@ -1792,3 +1108,58 @@ components:
             - ready
       required:
         - status
+  responses:
+    BadRequest:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthenticated:
+      description: Session absent, expired, or inactive user
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Forbidden:
+      description: Origin rejected or insufficient rights
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    TooLarge:
+      description: Request or image too large
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    UnsupportedType:
+      description: Unsupported content type
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    RateLimited:
+      description: Rate limit
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    InternalError:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

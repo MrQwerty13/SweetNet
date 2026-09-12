@@ -81,7 +81,7 @@ func newSession(ctx context.Context, tx pgx.Tx, userID string) (string, error) {
 		return "", err
 	}
 	// Bound session storage for a small community; retain at most ten per user.
-	_, err = tx.Exec(ctx, `DELETE FROM sessions WHERE expires_at<=now() OR id IN (SELECT id FROM sessions WHERE user_id=$1 ORDER BY created_at DESC OFFSET 9)`, userID)
+	_, err = tx.Exec(ctx, `DELETE FROM sessions WHERE user_id=$1 AND (expires_at<=now() OR id IN (SELECT id FROM sessions WHERE user_id=$1 ORDER BY created_at DESC OFFSET 9))`, userID)
 	if err != nil {
 		return "", err
 	}

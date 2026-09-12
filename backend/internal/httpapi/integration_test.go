@@ -19,6 +19,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"sweetnet/internal/auth"
 	"sweetnet/internal/config"
@@ -346,5 +347,91 @@ func TestLimiterBoundAndReset(t *testing.T) {
 	l.entries["x"] = rateEntry{until: time.Now().Add(-time.Second)}
 	if !l.allow("x", 1, time.Hour) {
 		t.Fatal("expiry")
+	}
+}
+
+func TestStrictPostUpdateAndSchema(t *testing.T) {
+	f := setup(t)
+	p := f.post(f.owner, "keep me", 1)
+	f.json("PATCH", "/api/v1/posts/"+p.ID, f.owner, `{}`, 400)
+	f.json("PATCH", "/api/v1/posts/"+p.ID, f.owner, `{"body":null}`, 400)
+	f.json("GET", "/api/v1/posts/"+p.ID, f.member, "", 200)
+	var body string
+	if err := f.db.QueryRow(context.Background(), `SELECT body FROM posts WHERE id=$1`, p.ID).Scan(&body); err != nil || body != "keep me" {
+		t.Fatal("invalid update changed body")
+	}
+	for _, query := range []string{
+		`INSERT INTO users(username,display_name,password_hash,role) VALUES('other_owner','X','hash','owner')`,
+		`INSERT INTO users(username,display_name,password_hash,role) VALUES('bad_role','X','hash','admin')`,
+		`INSERT INTO posts(author_id,body) VALUES('00000000-0000-0000-0000-000000000000','orphan')`,
+	} {
+		if _, err := f.db.Exec(context.Background(), query); err == nil {
+			t.Fatal("database invariant not enforced")
+		}
+	}
+	f.db.Close()
+	f.json("GET", "/readyz", nil, "", 503)
+}
+
+func TestCommitUncertaintyPreservesPhotos(t *testing.T) {
+	if !preserveFilesAfterCommit(nil) || !preserveFilesAfterCommit(context.DeadlineExceeded) {
+		t.Fatal("successful/uncertain commits must keep photos")
+	}
+	if preserveFilesAfterCommit(pgx.ErrTxCommitRollback) {
+		t.Fatal("known rollback should clean files")
+	}
+}
+func TestConcurrentPasswordWorkBound(t *testing.T) {
+	s := &Server{passwordWork: make(chan struct{}, 2)}
+	s.passwordWork <- struct{}{}
+	s.passwordWork <- struct{}{}
+	called := false
+	handler := s.boundPasswordWork(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { called = true; w.WriteHeader(204) }))
+	response := httptest.NewRecorder()
+	handler.ServeHTTP(response, httptest.NewRequest("POST", "/", nil))
+	if called || response.Code != 429 {
+		t.Fatal("password work not bounded")
+	}
+	<-s.passwordWork
+	response = httptest.NewRecorder()
+	handler.ServeHTTP(response, httptest.NewRequest("POST", "/", nil))
+	if !called || response.Code != 204 {
+		t.Fatal("released work slot not reusable")
+	}
+}
+
+func TestFailedBatchCleansEarlierImage(t *testing.T) {
+	f := setup(t)
+	var data, picture bytes.Buffer
+	png.Encode(&picture, image.NewRGBA(image.Rect(0, 0, 8, 8)))
+	form := multipart.NewWriter(&data)
+	form.WriteField("body", "must not be published")
+	for _, mime := range []string{"image/png", "image/jpeg"} {
+		header := textproto.MIMEHeader{}
+		header.Set("Content-Disposition", `form-data; name="images"; filename="image.png"`)
+		header.Set("Content-Type", mime)
+		part, _ := form.CreatePart(header)
+		part.Write(picture.Bytes())
+	}
+	form.Close()
+	result := f.req("POST", "/api/v1/posts", f.owner, &data, form.FormDataContentType(), f.s.Config.Origin)
+	if result.Code != 415 {
+		t.Fatalf("got %d", result.Code)
+	}
+	files, err := os.ReadDir(f.s.Config.UploadDir)
+	if err != nil || len(files) != 0 {
+		t.Fatal("failed batch left processed images")
+	}
+	var count int
+	f.db.QueryRow(context.Background(), `SELECT count(*) FROM posts`).Scan(&count)
+	if count != 0 {
+		t.Fatal("failed batch created post")
+	}
+	f.s.Config.Production = true
+	response := httptest.NewRecorder()
+	f.s.setCookie(response, "synthetic-test-cookie")
+	cookie := response.Result().Cookies()[0]
+	if !cookie.Secure || !cookie.HttpOnly || cookie.SameSite != http.SameSiteLaxMode {
+		t.Fatal("production cookie flags")
 	}
 }

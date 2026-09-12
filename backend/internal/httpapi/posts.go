@@ -200,7 +200,10 @@ func (s *Server) createPost(w http.ResponseWriter, r *http.Request) {
 		fail(w, 400, "VALIDATION_ERROR", "Текст должен быть передан один раз")
 		return
 	}
-	body := r.FormValue("body")
+	body := ""
+	if values := r.MultipartForm.Value["body"]; len(values) == 1 {
+		body = values[0]
+	}
 	files := r.MultipartForm.File["images"]
 	if !validBody(body) || len(files) > 4 || (strings.TrimSpace(body) == "" && len(files) == 0) {
 		fail(w, 400, "VALIDATION_ERROR", "Добавьте текст до 5000 символов или до 4 фотографий")
@@ -272,11 +275,14 @@ func (s *Server) createPost(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	if err = tx.Commit(r.Context()); err != nil {
+	err = tx.Commit(r.Context())
+	// A network failure can hide a successful COMMIT. In that case retaining
+	// possible orphans is safer than deleting photos referenced by a live post.
+	committed = preserveFilesAfterCommit(err)
+	if err != nil {
 		dbError(w, err)
 		return
 	}
-	committed = true
 	p, err := s.post(r.Context(), id)
 	if err != nil {
 		dbError(w, err)
@@ -290,13 +296,13 @@ func (s *Server) editPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var in struct {
-		Body string `json:"body"`
+		Body *string `json:"body"`
 	}
 	if !decode(w, r, &in) {
 		return
 	}
-	if !validBody(in.Body) {
-		fail(w, 400, "VALIDATION_ERROR", "Текст длиннее 5000 символов")
+	if in.Body == nil || !validBody(*in.Body) {
+		fail(w, 400, "VALIDATION_ERROR", "Передайте текст (до 5000 символов)")
 		return
 	}
 	tx, err := s.DB.Begin(r.Context())
@@ -314,7 +320,7 @@ func (s *Server) editPost(w http.ResponseWriter, r *http.Request) {
 		fail(w, 403, "FORBIDDEN", "Редактировать можно только свои посты")
 		return
 	}
-	if strings.TrimSpace(in.Body) == "" {
+	if strings.TrimSpace(*in.Body) == "" {
 		var count int
 		if err = tx.QueryRow(r.Context(), `SELECT count(*) FROM post_images WHERE post_id=$1`, id).Scan(&count); err != nil {
 			dbError(w, err)
@@ -325,7 +331,7 @@ func (s *Server) editPost(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	if _, err = tx.Exec(r.Context(), `UPDATE posts SET body=$1,updated_at=now() WHERE id=$2`, in.Body, id); err != nil {
+	if _, err = tx.Exec(r.Context(), `UPDATE posts SET body=$1,updated_at=now() WHERE id=$2`, *in.Body, id); err != nil {
 		dbError(w, err)
 		return
 	}
@@ -420,4 +426,9 @@ func (s *Server) getMedia(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", mime)
 	w.Header().Set("Content-Disposition", "inline")
 	http.ServeContent(w, r, "image", info.ModTime(), file)
+}
+
+// ErrTxCommitRollback guarantees rollback; all other commit errors are ambiguous.
+func preserveFilesAfterCommit(err error) bool {
+	return !errors.Is(err, pgx.ErrTxCommitRollback)
 }
