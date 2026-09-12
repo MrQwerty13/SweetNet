@@ -13,3 +13,5 @@ backups/
 .DS_Store
 backend/server
 backend/admin
+__pycache__/
+*.py[cod]
