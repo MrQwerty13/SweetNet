@@ -1,0 +1,17 @@
+{
+  "name": "sweetnet-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "contract": "node validate-openapi.mjs"
+  },
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "12.1.0",
+    "@playwright/test": "1.58.2",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "pg": "8.16.3",
+    "yaml": "2.8.2"
+  }
+}
