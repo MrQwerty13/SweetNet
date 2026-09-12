@@ -1,1 +1,17 @@
+.env
+.env.*
+!.env.example
+node_modules/
+web/dist/
+web/test-results/
+web/playwright-report/
 .local/
+.tmp/
+uploads/
+backups/
+*.log
+.DS_Store
+backend/server
+backend/admin
+__pycache__/
+*.py[cod]

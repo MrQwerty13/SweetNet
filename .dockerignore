@@ -1,0 +1,26 @@
+# Only application source is needed in the build context.
+*
+!backend/
+!backend/**
+!web/
+!web/**
+**/.env
+**/.env.*
+**/node_modules
+**/dist
+**/coverage
+**/test-results
+**/playwright-report
+**/.git
+**/.local
+**/.tmp
+**/uploads
+**/backups
+**/*.dump
+**/*.tar
+**/*.tar.gz
+**/*.key
+**/*.pem
+**/.DS_Store
+backend/server
+backend/admin
