@@ -2,14 +2,13 @@ import { test, expect, type Page } from '@playwright/test';
 import { randomBytes } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import pg from 'pg';
 import YAML from 'yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 
 const password = process.env.E2E_PASSWORD!;
 const origin = process.env.E2E_BASE_URL!;
-const image = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=', 'base64');
+const image = readFileSync(new URL('../fixtures/lake.png', import.meta.url));
 async function login(page: Page, username: string, pass = password) {
  await page.goto('/login');
  await page.getByLabel('Логин', { exact: true }).fill(username);
@@ -39,6 +38,7 @@ test('two friends, protected photos, profiles, membership and mobile UI', async 
  await page.getByLabel(/Текст/).fill('В субботу идём гулять. Кто с нами?');
  await page.locator('input[type=file]').setInputFiles({ name: 'lake.png', mimeType: 'image/png', buffer: image });
  await page.getByRole('button', { name: /Опубликовать/ }).click();
+ await expect(page.getByRole('heading', { name: 'Публикация', exact: true })).toBeVisible();
  await expect(page.getByText('В субботу идём гулять. Кто с нами?', { exact: true })).toBeVisible();
  await friend.reload();
  await expect(friend.getByText('В субботу идём гулять. Кто с нами?', { exact: true })).toBeVisible();
@@ -58,7 +58,7 @@ test('two friends, protected photos, profiles, membership and mobile UI', async 
  await friend.getByLabel(/Текст/).fill('Как здорово, что теперь у нас есть своё место.');
  await friend.getByRole('button', { name: /Опубликовать/ }).click();
  await expect(friend.getByText('Как здорово, что теперь у нас есть своё место.', { exact: true })).toBeVisible();
- await page.goto('/'); await page.screenshot({ path: '../.local/desktop-feed.png', fullPage: true });
+ await page.goto('/'); await expect(page.locator('article img').first()).toBeVisible(); await page.screenshot({ path: '../.local/desktop-feed.png', fullPage: true });
  await friend.getByRole('link', { name: 'Профиль', exact: true }).click();
  await friend.getByLabel('Отображаемое имя', { exact: true }).fill('Анна Петрова');
  await friend.getByRole('button', { name: /Сохранить имя/ }).click();
@@ -98,4 +98,6 @@ test('responses satisfy OpenAPI and offline reset revokes sessions', async ({ re
  const reset = spawnSync(new URL('../../.local/admin', import.meta.url).pathname, ['reset-password', '--username', 'owner'], { env: process.env, input: randomBytes(20).toString('hex') + '\n', encoding: 'utf8' });
  expect(reset.status, reset.stderr).toBe(0);
  expect((await request.get('/api/v1/me')).status()).toBe(401);
+ const restorePassword = spawnSync(new URL('../../.local/admin', import.meta.url).pathname, ['reset-password', '--username', 'owner'], { env: process.env, input: password + '\n', encoding: 'utf8' });
+ expect(restorePassword.status).toBe(0);
 });
